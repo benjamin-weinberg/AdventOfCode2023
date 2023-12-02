@@ -5,15 +5,11 @@
         int? sumPart1 = 0;
         int? sumPart2 = 0;
 
-        int? indexOfFirstNumber;
-        int? indexOfLastNumber;
-
         if (File.Exists("input.txt"))
         {
-            //TextReader file = File.OpenText("input.txt");
             TextReader file = File.OpenText("input.txt");
 
-            string line;
+            string? line;
 
             while ((line = file.ReadLine()) != null)
             {

@@ -93,13 +93,4 @@
 
         Console.WriteLine("Part 2 answer: " + sumOfPowerSets);
     }
-
-    enum Colors
-    {
-        red,
-        green,
-        blue
-    }
-
-    static readonly List<string> ColorStrings = ["red", "green", "blue"];
 }
