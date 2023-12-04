@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-internal class Program
+﻿internal class Program
 {
     private static void Main(string[] args)
     {
@@ -21,16 +19,13 @@ internal class Program
 
                 (var winners, var numbers) = (line.Split(':')[1].Split('|')[0].Split(' ', StringSplitOptions.RemoveEmptyEntries), line.Split(':')[1].Split('|')[1].Split(' ', StringSplitOptions.RemoveEmptyEntries));
 
-                part1Answer += (int) Math.Pow(2, numbers.Select(num => winners.Any(winner => winner.Equals(num))).Where(x => x == true).Count() - 1);
-
                 var numWinners = numbers.Select(num => winners.Any(winner => winner.Equals(num))).Where(x => x == true).Count();
 
-                for(int gameNumber = 1; gameNumber <= GamesList[lineNumber]; gameNumber++)
+                part1Answer += (int) Math.Pow(2, numWinners - 1);
+
+                for (int i = 1; i <= numWinners; i++)
                 {
-                    for (int i = 1; i <= numWinners; i++)
-                    {
-                        GamesList[lineNumber + i]++;
-                    }
+                    GamesList[lineNumber + i] += GamesList[lineNumber];
                 }
             }
 
