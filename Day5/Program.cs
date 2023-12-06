@@ -26,6 +26,7 @@ internal class Program
             var tempToHumidity = alamanacMappings[6].Split("\n");
             var humidityToLocation = alamanacMappings[7].Split("\n");
 
+            // Part 1
             foreach (var seed in seeds)
             {
                 if (uint.TryParse(seed, out uint seedNum))
@@ -45,6 +46,8 @@ internal class Program
 
             }
 
+
+            // Part 2 **VERY INEFFICIENT**
             var seedRanges = new List<List<uint>>();
             for (int i = 1; i < seeds.Length; i += 2)
             {
