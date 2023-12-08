@@ -54,12 +54,26 @@ internal class Program
 
             // Part 2
 
-            step = 0;
-            index = -1;
-            var currentNodes = nodeList.Where(x => x.NodeLoction.EndsWith('A')).ToList();
-            foreach (Node node in currentNodes)
+            var currentNodes = nodeList.Where(x => x.NodeLoction.EndsWith('A')).Select(x => (node: x, period: 0)).ToList() ;
+            foreach ((Node node, int p) in currentNodes)
             {
+                step = 0;
+                index = -1;
+                currentNode = node;
+                while (currentNode.NodeLoction.EndsWith("Z"))
+                {
+                    step++;
+                    index++;
 
+                    //reset the step if the current step is more than the length
+                    if (index >= steps.Length)
+                        index = 0;
+
+                    currentNode = FindNextNode(steps[index], currentNode, nodeList);
+
+                }
+
+                p = step;
             }
 
             //while (!currentNodes.All(x => x.NodeLoction.EndsWith('Z')))
