@@ -54,13 +54,15 @@ internal class Program
 
             // Part 2
 
-            var currentNodes = nodeList.Where(x => x.NodeLoction.EndsWith('A')).Select(x => (node: x, period: 0)).ToList() ;
-            foreach ((Node node, int p) in currentNodes)
+            var currentNodes = nodeList.Where(x => x.NodeLoction.EndsWith('A')).ToList();
+            int[] periods = new int[currentNodes.Count];
+            int i = 0;
+            foreach (Node node in currentNodes)
             {
                 step = 0;
                 index = -1;
                 currentNode = node;
-                while (currentNode.NodeLoction.EndsWith("Z"))
+                while (!currentNode.NodeLoction.EndsWith('Z'))
                 {
                     step++;
                     index++;
@@ -73,28 +75,12 @@ internal class Program
 
                 }
 
-                p = step;
+                periods[i] = step;
+                i++;
             }
 
-            //while (!currentNodes.All(x => x.NodeLoction.EndsWith('Z')))
-            //{
-            //    step++;
-            //    index++;
+            part2Answer = FindLcm(periods);
 
-            //    //reset the step if the current step is more than the length
-            //    if (index >= steps.Length)
-            //        index = 0;
-
-            //    var newNodes = new List<Node>();
-            //    foreach (Node node in currentNodes)
-            //    {
-            //       newNodes.Add(FindNextNode(steps[index], node, nodeList));
-            //    }
-
-            //    currentNodes = newNodes;
-            //}
-
-            part2Answer = step;
         }
 
 
@@ -124,20 +110,29 @@ internal class Program
 
     }
 
-    static int gcd(int n1, int n2)
+    static long Gcd(long a, long b)
     {
-        if (n2 == 0)
+        while (b != 0)
         {
-            return n1;
+            long t = b;
+            b = a % b;
+            a = t;
         }
-        else
-        {
-            return gcd(n2, n1 % n2);
-        }
+        return a;
     }
 
-    static int lcm(int[] numbers)
+    static long Lcm(long a, long b)
     {
-        return numbers.Aggregate((S, val) => S * val / gcd(S, val));
+        return (a / Gcd(a, b)) * b;
+    }
+
+    static long FindLcm(int[] numbers)
+    {
+        long result = numbers[0];
+        for (long i = 1; i < numbers.Length; i++)
+        {
+            result = Lcm(result, numbers[i]);
+        }
+        return result;
     }
 }
